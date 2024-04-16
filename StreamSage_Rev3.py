@@ -1,4 +1,5 @@
 import requests
+import json
 import streamlit as st
 
 # Fetch data from TVmaze API
@@ -7,10 +8,21 @@ response_tvmaze = requests.get(url_tvmaze)
 data_tvmaze = response_tvmaze.json()
 
 # Fetch data from TMDb API
-url_tmdb = "https://api.themoviedb.org/3/movie/popular?api_key=YOUR_TMDB_API_KEY"
+url_tmdb = "https://api.themoviedb.org/3/movie/popular?api_key=30694fa5f1cc552504ecce5c16034f5d"
 response_tmdb = requests.get(url_tmdb)
 data_tmdb = response_tmdb.json()
 
+# Extract all genre IDs
+genre_ids = set(genre_id for movie in data_tmdb.get('results', []) for genre_id in movie['genre_ids'])
+
+# Convert the response to a string
+data_str = json.dumps(data_tmdb, indent=4)
+
+# Write the response to a text log file
+with open('response_log.txt', 'w') as f:
+    f.write(data_str)
+
+    
 # Extract unique channels from the TVmaze data
 channels = set(show['network']['name'] for show in data_tvmaze if show['network'])
 
