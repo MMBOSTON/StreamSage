@@ -20,6 +20,9 @@ With StreamSage, take control of your streaming experience and maximize your ent
 
 
 Project and Work Product Description:
+Rev1: Simple working app. Manually added some streaming services (i.e. Netflix, Amazon Prime, Hulu, Tubi, etc.) and added a few "fake series data" to check/validate the app functionality.
+Rev2: Fetching data from tvmaze open source site. App is working as designed.
+Rev3: Fetching data from tvmaze and themoviedb.org site. WIP!!!!
 
 **Rev1**
 Packages Needed: This program uses the streamlit package. Streamlit is an open-source Python library that makes it easy to create and share beautiful, custom web apps for machine learning and data science. You can install it using pip: pip install streamlit.
