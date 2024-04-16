@@ -21,6 +21,7 @@ With BingeBoss, take control of your streaming experience and maximize your ente
 
 Project and Work Product Description:
 
+**Rev1**
 Acct_Score is a tailored solution designed to help businesses efficiently identify and prioritize potential customers that best match their Ideal Customer Profile (ICP). By enabling users to input custom attributes and their corresponding weights, the system calculates "best-fit" scores for prospective accounts. This process not only enhances the effectiveness of sales and marketing strategies but also optimizes resource allocation, leading to increased customer conversion rates. As a standalone, lightweight Python application built with Streamlit, Acct_Score reduces reliance on other complex sales and marketing tools and offers customizable scoring criteria to suit diverse market needs and business objectives.
 
 - AS-IS Workflow: [Insert diagram here] - This diagram will illustrate the current method businesses use to evaluate potential customers without Acct_Score. [TBD]
@@ -51,9 +52,8 @@ This section provides an in-depth look at the code structure, explaining the pur
 
 • Software packages (Python packages, etc.)
 - Streamlit: For building the interactive web app.
-- Pandas: Used for data manipulation and analysis.
-- Scikit-learn: For data normalization.
-- Python-dotenv: For managing environment variables (if needed).
+- BeautifulSoup: Python library that is used for web scraping purposes to pull the data out of HTML and XML files.
+
 
 • Complete code: https://github.com/marketerscode/Acct_Score/
 Actual Working Product Code: [TBD] Functions, modules, packages, documentation
@@ -62,7 +62,7 @@ Application Instructions: Instructions to install, set-up, and use software:
 
 Clone the repository: git clone [https://github.com/marketerscode/Acct_Score/]
 Create and activate the Conda environment: conda env create -f environment.yml conda activate acct_score_env
-Install required packages: pip install -r requirements.txt
+Install required packages: conda install -r requirements.txt
 Start the application: python acct_score.py Follow the GUI prompts to upload data and input attributes and weights.
 Review the output CSV for scored accounts.
 
