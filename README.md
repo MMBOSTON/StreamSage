@@ -1,28 +1,42 @@
-# BingeBoss: Your All-in-One Streaming Companion
+# StreamSage: Your All-in-One Streaming Companion
 
 **Updated: 2024.04.15**
 
-BingeBoss is a easy-to-use progressive web app (PWA) designed to be your one-stop area for managing your streaming life. Whether you're a die-hard movie buff or a serial series watcher, BingeBoss keeps you organized and entertained.
+StreamSage is a easy-to-use progressive web app (PWA) designed to be your one-stop area for managing your streaming life. Whether you're a die-hard movie buff or a serial series watcher, StreamSage keeps you organized and entertained.
 
-Here's what BingeBoss offers:
+Here's what StreamSage offers:
 
 **Track Your Progress**: Keep tabs on everything you've watched, are currently watching, and what's next in your queue. No more forgetting where you left off!
-**AI-Powered Recommendations**: Discover new shows and movies you'll love based on your watch history. Let BingeBoss be your personal streaming guru.
-**Spoiler-Free Zones**: Tired of accidentally getting spoiled? BingeBoss helps you navigate the platform spoiler-free.
+**AI-Powered Recommendations**: Discover new shows and movies you'll love based on your watch history. Let StreamSage be your personal streaming guru.
+**Spoiler-Free Zones**: Tired of accidentally getting spoiled? StreamSage helps you navigate the platform spoiler-free.
 **Filter Frenzy**: Find exactly what you're looking for with advanced filtering options.
 
 But wait, there's more!
 
-BingeBoss goes beyond just managing your watchlist. It's also a community hub:
+StreamSage goes beyond just managing your watchlist. It's also a community hub:
 
-**Share Your Thoughts**: Review what you've watched and see what others are saying. BingeBoss fosters a space to connect with fellow viewers.
-With BingeBoss, take control of your streaming experience and maximize your entertainment enjoyment.
+**Share Your Thoughts**: Review what you've watched and see what others are saying. StreamSage fosters a space to connect with fellow viewers.
+With StreamSage, take control of your streaming experience and maximize your entertainment enjoyment.
 
 
 Project and Work Product Description:
 
 **Rev1**
-Acct_Score is a tailored solution designed to help businesses efficiently identify and prioritize potential customers that best match their Ideal Customer Profile (ICP). By enabling users to input custom attributes and their corresponding weights, the system calculates "best-fit" scores for prospective accounts. This process not only enhances the effectiveness of sales and marketing strategies but also optimizes resource allocation, leading to increased customer conversion rates. As a standalone, lightweight Python application built with Streamlit, Acct_Score reduces reliance on other complex sales and marketing tools and offers customizable scoring criteria to suit diverse market needs and business objectives.
+Packages Needed: This program uses the streamlit package. Streamlit is an open-source Python library that makes it easy to create and share beautiful, custom web apps for machine learning and data science. You can install it using pip: pip install streamlit.
+
+Functions Needed: The fetch_data() function is needed which is not shown in the provided code. This function should return a list of TV shows, where each TV show is a dictionary with keys like "title", "genre", "language", "duration", "platform", and "rating".
+
+Program Execution:
+
+The program first fetches the data by calling fetch_data() and stores the result in TV_SHOWS.
+
+It then creates selectboxes for the streaming service provider, genre, language, and user ratings using the st.selectbox function. The options for these selectboxes are taken from STREAMING_PROVIDERS, GENRES, LANGUAGES, and a list of ratings from 1 to 10.
+
+The program then filters the TV shows based on the user's preferences. It creates a new list filtered_shows that includes only the shows that match the selected platform, genre, language, and have a rating greater than or equal to the selected rating.
+
+Finally, the program displays the recommended shows. For each show in filtered_shows, it writes the title, genre, language, duration, platform, and rating to the Streamlit app using st.write.
+
+How to Run the Program: To run the program, you need to have Streamlit installed and then you can run the script using the command streamlit run StreamSage_Rev1.py in your terminal. This will start a local server and open the Streamlit app in your web browser.
 
 - AS-IS Workflow: [Insert diagram here] - This diagram will illustrate the current method businesses use to evaluate potential customers without Acct_Score. [TBD]
 - TO-BE Workflow: [Insert diagram here] - This diagram will demonstrate how Acct_Score streamlines and enhances the customer evaluation process. [TBD]
@@ -81,17 +95,6 @@ Deliver
 Deploy
 Jinja2 Jinja3 ==> Jinja
 
-README for Account Scoring Streamlit App
-Overview
-The Account Scoring Streamlit App is a web-based application that calculates fit scores for accounts based on their attributes. The fit score is a measure of how well an account matches a set of target attribute values and weights specified by the user.
-
-How it Works
-The application uses the Streamlit library to create an interactive user interface. The user can input target values and weights for each attribute, and the application calculates the fit score for each account.
-
-The fit score is calculated as the sum of the absolute differences between the account's numerical attribute values and the target values, each multiplied by the corresponding weight, plus the sum of whether the account's categorical attribute values match the preferred categories, each multiplied by the corresponding weight.
-
-The application also includes a function to convert range values to their midpoint for the 'Company Size' attribute. This function is used to handle attributes that are specified as ranges rather than single values.
-
 How to Use
 To use the application, follow these steps:
 
@@ -102,19 +105,7 @@ The fit scores will be displayed in a table. You can sort the table by any colum
 Requirements
 To run this application, you will need:
 
-Python 3.6 or later
-Streamlit
-Pandas
-sklearn
-Installation
-To install the required libraries, you can use pip:
-
- install streamlit pandas sklearn
-To run the application, use the Streamlit command:
-
-streamlit run Acct_Score_Streamlit_App.py
-Future Enhancements
-Future enhancements to this application could include:
+**Future enhancements**:
 
 Adding more attributes
 Allowing the user to upload their own data
