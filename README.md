@@ -1,6 +1,6 @@
 # StreamSage: Your All-in-One Streaming Companion
 
-**Updated: 2024.04.15**
+**Updated: 2024.04.17**
 
 StreamSage is a easy-to-use progressive web app (PWA) designed to be your one-stop area for managing your streaming life. Whether you're a die-hard movie buff or a serial series watcher, StreamSage keeps you organized and entertained.
 
@@ -20,9 +20,80 @@ With StreamSage, take control of your streaming experience and maximize your ent
 
 
 Project and Work Product Description:
-Rev1: Simple working app. Manually added some streaming services (i.e. Netflix, Amazon Prime, Hulu, Tubi, etc.) and added a few "fake series data" to check/validate the app functionality.
-Rev2: Fetching data from tvmaze open source site. App is working as designed.
+
+*Rev1*: Simple working app. Manually added some streaming services (i.e. Netflix, Amazon Prime, Hulu, Tubi, etc.) and added a few "fake series data" to check/validate the app functionality.
+*Details* : StreamSage_Rev1.py is the initial version of the StreamSage application. This application is a Streamlit web app that allows users to explore a wide range of TV shows from various streaming providers and channels.
+
+Key Features: User-friendly interface: Users can filter TV shows by streaming provider, genre, and language. The main panel of the app displays the TV shows that match the selected filters.
+
+Show details: Users can select a show to get more information about it, including the name, language, genres, runtime, rating, and summary.
+
+Technical Details:
+
+Streamlit: The app is built with Streamlit, a Python library for creating web apps.
+
+Data source: The TV show data is fetched from a function fetch_data(), which currently returns a hard-coded list of TV shows. In a production environment, this function could be updated to fetch data from a database or an API.
+
+BeautifulSoup: The app uses the BeautifulSoup library to parse the summary of the selected show. The parsed summary is then displayed in the app.
+
+*Rev2*: Fetching data from tvmaze open source site. App is working as designed.
+StreamSage_Rev2.py is the second revision of the StreamSage application. This version introduces a more user-friendly interface with clear instructions for users.
+
+Key Updates:
+
+Improved User Interface: The application now starts with a welcome message and instructions on how to use the app. This makes the app more user-friendly and intuitive.
+
+Markdown Formatting: The welcome message and instructions are written in Markdown, which allows for easy formatting of the text. The unsafe_allow_html=True parameter is used to allow HTML tags in the Markdown text.
+
+Centered Text: The welcome message is centered using the <center> HTML tag to make it more visually appealing.
+
+Technical Details:
+
+Streamlit Markdown: The app uses Streamlit's st.markdown() function to display the welcome message and instructions. This function allows Markdown and HTML to be used in the app.
+The rest of the app remains the same as in StreamSage_Rev1.py, including the user filters and the display of TV show details. To run the app, Streamlit and BeautifulSoup need to be installed.
+
 Rev3: Fetching data from tvmaze and themoviedb.org site. WIP!!!!
+StreamSage_Rev3.py is the third revision of the StreamSage application. This version introduces integration with external APIs to fetch real TV show data.
+
+Key Updates:
+
+Integration with TVmaze and TMDb APIs: The application now fetches TV show data from the TVmaze and TMDb APIs. This allows the app to display a wide range of TV shows from various streaming providers and channels.
+
+Filtering of TV Shows: The app filters the TV shows based on the user's selected genre, language, duration, and rating. The filtered shows are then displayed in the app.
+
+Display of TV Show Details: The app displays the details of each recommended TV show, including the title, genre, language, duration, platform, summary, and rating. The summary is parsed using BeautifulSoup to remove any HTML tags.
+
+Technical Details:
+
+Requests: The app uses the requests library to send HTTP requests to the TVmaze and TMDb APIs.
+
+BeautifulSoup: The app uses the BeautifulSoup library to parse the summary of each TV show.
+
+List Comprehensions: The app uses list comprehensions to filter the TV shows based on the user's selected filters.
+
+The rest of the app remains the same as in StreamSage_Rev2.py, including the welcome message and instructions. To run the app, Streamlit, BeautifulSoup, and requests need to be installed.
+
+Rev4:
+StreamSage_Rev4.py is the fourth revision of the StreamSage application. This version enhances the user experience and provides more detailed information about TV shows.
+
+Key Updates:
+
+Dynamic Filtering: The available options for each filter (streaming provider, genre, and language) are now dynamically extracted from the fetched data. This ensures that the filter options always reflect the current state of the TVmaze database.
+
+Enhanced Display of Recommendations: The display of recommended TV shows has been enhanced. For each recommended show, the program now displays the title, genre, language, duration, platform, summary, and rating.
+
+User-Friendly Interface: The user interface has been improved. Streamlit's interactive widgets are used for the filters, and its markdown support is used to format the displayed information in a readable way.
+
+HTML Tag Removal: The program now uses BeautifulSoup to remove HTML tags from the summaries of the TV shows before displaying them. This ensures that the summaries are displayed in plain text, making them easier to read.
+
+Technical Details:
+
+Streamlit: The app uses Streamlit's interactive widgets for the filters and its markdown support to format the displayed information.
+
+BeautifulSoup: The app uses the BeautifulSoup library to remove HTML tags from the summaries of the TV shows.
+
+The rest of the app remains the same as in StreamSage_Rev3.py, including the fetching of TV show data from the TVmaze and TMDb APIs. To run the app, Streamlit, BeautifulSoup, and requests need to be installed.
+
 
 **Rev1**
 Packages Needed: This program uses the streamlit package. Streamlit is an open-source Python library that makes it easy to create and share beautiful, custom web apps for machine learning and data science. You can install it using conda-forge: install streamlit.
