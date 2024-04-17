@@ -1,3 +1,30 @@
+'''
+StreamSage is a Streamlit app that allows users to explore a wide range of TV shows from 
+various streaming providers and channels. 
+
+Overview
+
+The app provides a user-friendly interface where users can filter TV shows by streaming 
+provider, genre, and language. The main panel of the app displays the TV shows that match 
+the selected filters. Users can select a show to get more information about it, including 
+the name, language, genres, runtime, rating, and summary.
+
+Architecture
+
+The app is built with Streamlit, a Python library for creating web apps. It uses pre-defined 
+lists of streaming providers, genres, and languages for the filters. The TV show data is fetched 
+from a function `fetch_data()`, which currently returns a hard-coded list of TV shows. In a 
+production environment, this function could be updated to fetch data from a database or an API.
+
+The app uses the BeautifulSoup library to parse the summary of the selected show. The parsed 
+summary is then displayed in the app.
+
+Usage
+
+To run the app, you need to have Streamlit and BeautifulSoup installed. You can install 
+these packages with pip:
+'''
+
 import streamlit as st
 
 # List of all streaming service providers
