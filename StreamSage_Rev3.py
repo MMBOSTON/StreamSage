@@ -43,29 +43,22 @@ import json
 import streamlit as st
 from bs4 import BeautifulSoup
 
-st.markdown("""
-<center>
+# Function to load configuration parameters from a JSON file
+def load_config(config_file):
+    with open(config_file, 'r') as f:
+        config = json.load(f)
+    return config
 
-# Welcome to StreamSage: Your All-in-One Streaming Companion!
-
-</center>
-
-Explore a wide range of TV shows from various streaming providers and channels using this app. 
-
-## Instructions:
-1. Use the dropdown menus to filter TV shows by streaming provider, genre, and language.
-2. The main panel will update to display the TV shows that match your filters.
-
-Enjoy exploring!
-""", unsafe_allow_html=True)
+# Load configuration parameters
+config = load_config('config.json')
 
 # Fetch data from TVmaze API
 url_tvmaze = "http://api.tvmaze.com/shows"
 response_tvmaze = requests.get(url_tvmaze)
 data_tvmaze = response_tvmaze.json()
 
-# Fetch data from TMDb API
-url_tmdb = "https://api.themoviedb.org/3/movie/popular?api_key=30694fa5f1cc552504ecce5c16034f5d"
+# Fetch data from TMDb API for TV shows
+url_tmdb = f"https://api.themoviedb.org/3/tv/popular?api_key={config['tmdb_api_key']}"
 response_tmdb = requests.get(url_tmdb)
 data_tmdb = response_tmdb.json()
 
@@ -122,11 +115,11 @@ filtered_shows_tvmaze = [show for show in data_tvmaze if show['network'] and (pr
                          and (not show['runtime'] or show['runtime'] <= selected_duration)
                          and (not show.get('rating', {}).get('average') or show.get('rating', {}).get('average') >= selected_rating)]
 
-# Filter movies from TMDb
-filtered_movies_tmdb = [movie for movie in data_tmdb['results'] if (selected_genre == "Any" or selected_genre in movie['genre_ids'])
-                        and (selected_language == "Any" or selected_language == movie['original_language'].upper())
-                        and (not movie.get('runtime') or movie.get('runtime') <= selected_duration)
-                        and (not movie['vote_average'] or movie['vote_average'] >= selected_rating)]
+# Filter TV shows from TMDb
+filtered_shows_tmdb = [show for show in data_tmdb['results'] if (selected_genre == "Any" or selected_genre in show['genre_ids'])
+                        and (selected_language == "Any" or selected_language == show['original_language'].upper())
+                        and (not show.get('runtime') or show.get('runtime') <= selected_duration)
+                        and (not show['vote_average'] or show['vote_average'] >= selected_rating)]
 
 # Display the recommended shows from TVmaze
 for show in filtered_shows_tvmaze:
@@ -140,12 +133,11 @@ for show in filtered_shows_tvmaze:
     st.write(f"**Rating:** {show.get('rating', {}).get('average', 'N/A')}")
     st.write("---")
 
-# Display the recommended movies from TMDb
-for movie in filtered_movies_tmdb:
-    st.write(f"**Title:** {movie['title']}")
-    st.write(f"**Genre:** {', '.join(str(genre_id) for genre_id in movie['genre_ids'])}")
-    st.write(f"**Language:** {movie['original_language']}")
-    st.write(f"**Duration:** {movie.get('runtime', 'N/A')} minutes")
-    st.write(f"**Summary:** {movie['overview']}")
-    st.write(f"**Rating:** {movie['vote_average']}")
+# Display the recommended TV shows from TMDb
+for show in filtered_shows_tmdb:
+    st.write(f"**Title:** {show['name']}")
+    st.write(f"**Genre:** {', '.join(str(genre_id) for genre_id in show['genre_ids'])}")
+    st.write(f"**Language:** {show['original_language']}")
+    st.write(f"**Duration:** {show.get('runtime', 'N/A')} minutes")
+    st.write(f"**Rating:** {show.get('vote_average', 'N/A')}")
     st.write("---")
