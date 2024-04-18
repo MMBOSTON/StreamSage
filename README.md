@@ -25,25 +25,21 @@ We use Python and the Streamlit library to create an interactive web application
 
 * Minimum Viable Product (MVP) 1.0 delivered:
 
-  * Minimum Viable Product (MVP) 1.0 delivered: In the completed version 1.0 of this project:
+  * The app filters the TV shows based on the user's selected genre, language, duration, and rating.
 
 
 * Later MVP, i.e., v2, v3, vN+ functionality to be delivered
 For future enhancements, in the next versions of this project:
-  * Version 1.1: Clean up Technical Debt
-    * Inrm 
-  * Version 1.5: Quality Assurance
-    * 
-    * 
-  * Version 2.0: 
-  * Version 3.0: 
+  * Version 1: Clean up Technical Debt
+    * Debug Sterammlit.io App deployment issue 
+  * Version 2.0: The app displays the details of each recommended TV show, including the title, genre, language, duration, platform, summary, and rating.
+  * Version 3.0: Code has been developed to fetch TV show data from the TVmaze and TMDb APIs
   * Version 4.0: 
-  * Version 5.0: 
-
-Code has been developed to fetch TV show data from the TVmaze and TMDb APIs.
-The app filters the TV shows based on the user's selected genre, language, duration, and rating.
-The app displays the details of each recommended TV show, including the title, genre, language, duration, platform, summary, and rating.
-Later MVP, i.e., v2, v3, vN+ functionality to be delivered For future enhancements, in the next versions of this project: Version 2.0: Incorporate user viewing history to provide personalized recommendations. Version 3.0: Add user reviews and ratings to the TV show data. Version 4.0: Use machine learning algorithms to improve the recommendation system.
+  * Version 5.0:
+    * Incorporate user viewing history to provide personalized recommendations
+    * Incorporate user viewing history to provide personalized recommendations.
+    * Add user reviews and ratings to the TV show data.
+    * Use machine learning algorithms to improve the recommendation system.
 
 ## Solution Design (high-level):
 
