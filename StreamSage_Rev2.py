@@ -51,8 +51,6 @@ genres = list(set(genre for show in data for genre in show['genres']))
 languages = list(set(show['language'] for show in data if show['language']))
 
 # Streamlit app
-##st.title("StreamSage: Your All-in-One Streaming Companion")
-
 st.markdown("""
 <center>
 
@@ -74,6 +72,9 @@ STREAMING_PROVIDERS.sort()
 genres.sort()
 languages.sort()
 
+# Add "Any" to the list of streaming providers
+STREAMING_PROVIDERS = ["Any"] + STREAMING_PROVIDERS
+
 provider = st.selectbox("Choose a streaming provider", STREAMING_PROVIDERS)
 
 # Add filters for genre, language, duration, and rating
@@ -82,7 +83,7 @@ selected_language = st.selectbox("Choose a language", ["Any"] + languages)
 selected_duration = st.slider("Choose a maximum duration (in minutes)", 0, 200, 100)
 selected_rating = st.slider("Choose a minimum rating", 0.0, 10.0, 5.0)
 
-filtered_shows = [show for show in data if show['network'] and show['network']['name'] == provider
+filtered_shows = [show for show in data if (provider == "Any" or (show['network'] and show['network']['name'] == provider))
                   and (selected_genre == "Any" or selected_genre in show['genres'])
                   and (selected_language == "Any" or selected_language == show['language'])
                   and (not show['runtime'] or show['runtime'] <= selected_duration)
@@ -90,15 +91,29 @@ filtered_shows = [show for show in data if show['network'] and show['network']['
 
 # Display the recommended shows
 if filtered_shows:
-    selected_show = st.selectbox("Select a show", [show['name'] for show in filtered_shows])
-    show_details = next(show for show in filtered_shows if show['name'] == selected_show)
+    # Add "All" to the list of shows and select it by default
+    selected_show = st.selectbox("Select a show", ["All"] + [show['name'] for show in filtered_shows])
 
-    # Display the details of the selected show
-    st.write("Name:", show_details['name'])
-    st.write("Language:", show_details['language'])
-    st.write("Genres:", ", ".join(show_details['genres']))
-    st.write("Runtime:", show_details['runtime'])
-    st.write("Rating:", show_details.get('rating', {}).get('average'))
-    st.write("Summary:", BeautifulSoup(show_details['summary'], "html.parser").get_text())
+    if selected_show != "All":
+        # If a specific show is selected, display its details
+        show_details = next(show for show in filtered_shows if show['name'] == selected_show)
+
+        st.write("Name:", show_details['name'])
+        st.write("Language:", show_details['language'])
+        st.write("Genres:", ", ".join(show_details['genres']))
+        st.write("Runtime:", show_details['runtime'])
+        st.write("Rating:", show_details.get('rating', {}).get('average'))
+        st.write("Summary:", BeautifulSoup(show_details['summary'], "html.parser").get_text())
+    else:
+    # If "All" is selected, display the details of all shows
+        for show in filtered_shows:
+            st.write("Name:", show['name'])
+            st.write("Language:", show['language'])
+            st.write("Genres:", ", ".join(show['genres']))
+            st.write("Runtime:", show['runtime'])
+            st.write("Rating:", show.get('rating', {}).get('average'))
+            st.write("Summary:", BeautifulSoup(show['summary'], "html.parser").get_text())
+            st.write("Streaming Provider:", show['network']['name'] if show['network'] else "N/A")
+            st.write("---")  # Add a separator between shows
 else:
     st.write("No shows found with the selected filters.")
