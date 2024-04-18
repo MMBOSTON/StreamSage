@@ -85,7 +85,8 @@ language_codes = {
 }
 
 # Extract unique languages from TVmaze data and TMDb data
-languages = list(set(show['language'] for show in data_tvmaze if show['language']) | set(movie['original_language'] for movie in data_tmdb['results']))
+##languages = list(set(show['language'] for show in data_tvmaze if show['language']) | set(movie['original_language'] for movie in data_tmdb['results']))
+languages = list(set(show['language'] for show in data_tvmaze if show['language']) | set(movie['original_language'] for movie in data_tmdb['results']) if 'results' in data_tmdb else [])
 
 # Standardize language names using the language_codes dictionary
 languages = [language_codes.get(lang, lang.upper()) for lang in languages]
@@ -116,10 +117,14 @@ filtered_shows_tvmaze = [show for show in data_tvmaze if show['network'] and (pr
                          and (not show.get('rating', {}).get('average') or show.get('rating', {}).get('average') >= selected_rating)]
 
 # Filter TV shows from TMDb
-filtered_shows_tmdb = [show for show in data_tmdb['results'] if (selected_genre == "Any" or selected_genre in show['genre_ids'])
-                        and (selected_language == "Any" or selected_language == show['original_language'].upper())
-                        and (not show.get('runtime') or show.get('runtime') <= selected_duration)
-                        and (not show['vote_average'] or show['vote_average'] >= selected_rating)]
+filtered_movies_tmdb = [movie for movie in data_tmdb.get('results', []) if (selected_genre == "Any" or selected_genre in movie['genre_ids'])]
+
+
+##filtered_shows_tmdb = [show for show in data_tmdb['results'] if (selected_genre == "Any" or selected_genre in show['genre_ids'])
+##                        and (selected_language == "Any" or selected_language == show['original_language'].upper())
+##                        and (not show.get('runtime') or show.get('runtime') <= selected_duration)
+##                        and (not show['vote_average'] or show['vote_average'] >= selected_rating)]
+
 
 # Display the recommended shows from TVmaze
 for show in filtered_shows_tvmaze:
