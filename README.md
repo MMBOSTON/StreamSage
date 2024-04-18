@@ -2,7 +2,7 @@
 
 This project recommends TV shows based on user preferences.
 
-> See this project in action on Streamlit! Click here: https://streamsage.streamlit.app/
+> See this project in action on Streamlit! Click here: https://streamsage2.streamlit.app/
 
 
 ## Project - Work Product Description:
