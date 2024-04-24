@@ -62,13 +62,24 @@ config = load_config('config.json')
 check_and_update_usage(config['tmdb_api_key'])
 check_and_update_usage(config['thetvdb_api_key'])
 
+# Fetch series data from TVMaze
 url_tvmaze = "http://api.tvmaze.com/shows"
 response_tvmaze = requests.get(url_tvmaze)
 data_tvmaze = response_tvmaze.json()
 
+# Fetch series data from TMDB
 url_tmdb = f"https://api.themoviedb.org/3/tv/popular?api_key={config['tmdb_api_key']}"
 response_tmdb = requests.get(url_tmdb)
 data_tmdb = response_tmdb.json()
+
+# Fetch genre data from TMDB
+url_tmdb_genres = f"https://api.themoviedb.org/3/genre/tv/list?api_key={config['tmdb_api_key']}"
+response_tmdb_genres = requests.get(url_tmdb_genres)
+data_tmdb_genres = response_tmdb_genres.json()
+
+print(data_tmdb_genres['genres'])
+genres = [genre['name'] for genre in data_tmdb_genres['genres']]
+genre_dict = {genre['id']: genre['name'] for genre in data_tmdb_genres['genres']}
 
 # Fetch trending series from TMDB
 url_tmdb_trending = f"https://api.themoviedb.org/3/trending/tv/day?api_key={config['tmdb_api_key']}"
@@ -97,11 +108,25 @@ STREAMING_PROVIDERS = list(set(STREAMING_PROVIDERS))
 
 genres = list(set(genre for show in data_tvmaze for genre in show['genres']))
 
+# Define the list of countries
+countries = ['USA', 'UK', 'Canada', 'Australia', 'Germany', 'France', 'Italy', 'Spain', 'Japan', 'China', 'India', 'Other']
+
+# Define the list of statuses
+statuses = ['Running', 'Ended', 'In Development', 'To Be Determined', 'Pilot', 'Canceled', 'Other']
+
+# Define the list of qualities
+qualities = ['HD', 'SD', '4K', 'Other']
+
+# Define the list of subtitles
+subtitles = ['English', 'Spanish', 'French', 'German', 'Italian', 'Japanese', 'Chinese', 'Hindi', 'Other']
+
+# Define the list of audios
+audios = ['English', 'Spanish', 'French', 'German', 'Italian', 'Japanese', 'Chinese', 'Hindi', 'Other']
+
 # Load language codes from JSON file
 with open('language_codes.json', 'r') as f:
     language_codes = json.load(f)
 
-# Rest of your code...
 languages = list(set(show['language'] for show in data_tvmaze if show['language']) | set(tvshow['original_language'] for tvshow in data_tmdb['results']))
 languages = [language_codes.get(lang, lang.upper()) for lang in languages]
 languages = list(set(languages))
@@ -112,21 +137,47 @@ STREAMING_PROVIDERS.sort()
 genres.sort()
 languages.sort()
 
-# Create four columns
-col1, col2, col3, col4 = st.columns([1,2,1,3])
+# Create an expander for the filters with larger, bold text
+# Inject custom CSS
+st.markdown("""
+    <style>
+        .reportview-container .main .block-container .element-container .stExpander > div:first-child {
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+    """, unsafe_allow_html=True)
 
-# Place your content in the second column
-with col2:
-    selected_genre = st.selectbox("Choose a genre", ["Any"] + genres)
-    selected_language = st.selectbox("Choose a language", ["Any"] + languages)
-    provider = st.selectbox("Choose a streaming provider", ["ALL"] + STREAMING_PROVIDERS)
-    selected_duration = st.slider("Choose a maximum duration (in minutes)", 0, 200, 100)
-    selected_rating = st.slider("Choose a minimum rating", 0.0, 10.0, 5.0)
-    year = st.selectbox('Select Year of Release', ["Any"] + list(range(1950, 2023)))
+# Create an expander for the filters
+# Create an expander for the filters
+filters_expander = st.expander('Filters')
 
-# Add a search box to the Streamlit interface
-with col2:
-    search_query = st.text_input("Search for TV series by title, genre, actors, directors, etc.")
+# Place all the filters inside the expander
+with filters_expander:
+    # Create four columns
+    _, col1, col2, col3 = st.columns([1,2,1,3])
+
+    # Place your content in the first column
+    with col1:
+        search_query = st.text_input("Search for TV series by title, genre, actors, directors, etc.")
+        selected_genre = st.selectbox("Choose a genre", ["Any"] + genres)
+        selected_language = st.selectbox("Choose a language", ["Any"] + languages)
+        provider = st.selectbox("Choose a streaming provider", ["ALL"] + STREAMING_PROVIDERS)
+        year = st.selectbox('Select Year of Release', ["Any"] + list(range(1950, 2023)))
+
+    with col2:
+        selected_country = st.selectbox("Choose a country", ["Any"] + countries)
+        selected_status = st.selectbox("Choose a status", ["Any"] + statuses)
+        selected_quality = st.selectbox("Choose a quality", ["Any"] + qualities)
+        selected_subtitles = st.selectbox("Choose subtitles", ["Any"] + subtitles)
+        selected_audio = st.selectbox("Choose audio", ["Any"] + audios)
+
+    with col3:
+        selected_duration = st.slider("Choose a maximum duration (in minutes)", 0, 200, 100)
+        selected_rating = st.slider("Choose a minimum rating", 0.0, 10.0, 5.0)
+        selected_seasons = st.slider("Choose a maximum number of seasons", 0, 20, 10)
+        selected_episodes = st.slider("Choose a maximum number of episodes", 0, 200, 100)
+        selected_views = st.slider("Choose a minimum number of views", 0, 1000000, 500000)
 
 filtered_shows_tvmaze = [show for show in data_tvmaze if show['network'] and (provider == "ALL" or show['network']['name'] == provider)
                          and (selected_genre == "Any" or selected_genre in show['genres'])
@@ -148,30 +199,18 @@ if 'page' not in st.session_state:
     st.session_state.page = 0
 
 # Define genre_dict
-genre_dict = {
-    1: 'Action',
-    2: 'Adventure',
-    3: 'Comedy',
-    4: 'Crime',
-    5: 'Drama',
-    6: 'Fantasy',
-    7: 'Historical',
-    8: 'Horror',
-    9: 'Mystery',
-    10: 'Romance',
-    11: 'Science Fiction',
-    12: 'Thriller',
-    13: 'Western'
-    # Add more genres as needed
-}
+# Assuming 'genres' is a list of dictionaries, where each dictionary has 'id' and 'name' keys
+####genre_dict = {genre['id']: genre['name'] for genre in genres}
+
+##def get_genre_name(id):
+##    print(id, genre_dict.get(id, 'Unknown'))
+##    return genre_dict.get(id, 'Unknown')
 
 # Display the shows for the current page from filtered_shows_tvmaze
 for show in filtered_shows_tvmaze[st.session_state.page*5:(st.session_state.page+1)*5]:
     st.write(f"**Title:** {show['name']}")
     st.write(f"**Year:** {show['premiered'].split('-')[0] if show.get('premiered') else 'N/A'}")
-    # Now you can use genre_dict in your list comprehension
-    genres = ', '.join([genre_dict[id] for id in show.get('genre_ids', []) if id in genre_dict])
-    ##genres = ', '.join([genre_dict[id] for id in show.get('genre_ids', []) if id in genre_dict])
+    genres = ', '.join([genre_dict.get(id, "Unknown genre") for id in show.get('genre_ids', [])])
     st.write(f"**Genre:** {genres if genres else 'N/A'}")
     st.write(f"**Language:** {show['language']}")
     st.write(f"**Duration:** {show['runtime']} minutes")
@@ -185,8 +224,7 @@ for show in filtered_shows_tvmaze[st.session_state.page*5:(st.session_state.page
 for show in filtered_tvshows_tmdb[st.session_state.page*5:(st.session_state.page+1)*5]:
     st.write(f"**Title:** {show['name']}")
     st.write(f"**Year:** {show['first_air_date'].split('-')[0] if show.get('first_air_date') else 'N/A'}")
-    # Map genre_ids to genre names
-    genres = ', '.join([genre_dict[id] for id in show.get('genre_ids', []) if id in genre_dict])
+    genres = ', '.join([genre_dict.get(id, "Unknown genre") for id in show.get('genre_ids', [])])
     st.write(f"**Genre:** {genres if genres else 'N/A'}")
     st.write(f"**Language:** {show['original_language']}")
     st.write(f"**Duration:** {min(show.get('episode_run_time', [0]))} minutes")
@@ -194,6 +232,7 @@ for show in filtered_tvshows_tmdb[st.session_state.page*5:(st.session_state.page
     st.write(f"**Summary:** {show['overview']}")
     st.write(f"**Rating:** {show['vote_average']}")
     st.write("---")
+
 
 # Create two columns
 col1, col2 = st.columns(2)
