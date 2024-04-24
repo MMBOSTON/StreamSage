@@ -2,7 +2,7 @@
 
 This project recommends TV shows based on user preferences.
 
-> See this project in action on Streamlit! Click here: https://streamsage2.streamlit.app/
+> See this project in action on Streamlit! Click here: https://streamsage.streamlit.app/
 
 
 ## Project - Work Product Description:
@@ -11,7 +11,7 @@ StreamSage is a TV show recommendation application. It fetches real TV show data
 
 | The Project As-Is: | The Project To-Be: |
 | --------------- | --------------- |
-| Diagram 1 | Diagram 2 |
+| --------------- | --------------- |
 | **File Format:** Input user preferences. Output a list of recommended TV shows. | **File Format:** Output a list of recommended TV shows and personalized viewing suggestions, personalized recommendations, viewing history. Webscrapping other Databases | 
 | **Python Packages:** Streamlit, Pandas, Requests, BeautifulSoup,  scikit-learn |
 
@@ -27,20 +27,13 @@ We use Python and the Streamlit library to create an interactive web application
 
   * The app filters the TV shows based on the user's selected genre, language, duration, and rating.
 
-
 * Later MVP, i.e., v2, v3, vN+ functionality to be delivered
 For future enhancements, in the next versions of this project:
-  * Version 1: Clean up Technical Debt
-    * Debug Sterammlit.io App deployment issue 
-  * Version 2.0: The app displays the details of each recommended TV show, including the title, genre, language, duration, platform, summary, and rating.
-  * Version 3.0: Code has been developed to fetch TV show data from the TVmaze and TMDb APIs
-  * Version 4.0: 
-  * Version 5.0:
+  * Version x.0:
     * Incorporate user viewing history to provide personalized recommendations
     * Incorporate user viewing history to provide personalized recommendations.
     * Add user reviews and ratings to the TV show data.
     * Use machine learning algorithms to improve the recommendation system.
-  * Version 6.0:
     * User Authentication: Implement user authentication to allow users to create accounts and save their preferences.
     * User Profile Creation: Allow users to create profiles where they can input information such as their favorite genres, preferred runtime, language, etc.
     * Recommendation Engine: Develop a recommendation engine that suggests TV series based on user preferences. You can use collaborative filtering, content-based filtering, or a hybrid approach for this.
@@ -79,15 +72,20 @@ Display TV show details: The app displays the details of each recommended TV sho
 
 Here are the step-by-step instructions to install, set up, and use this project:
 
-1. Download and install these software tools:
+1. Create a config.json and add the 2 api keys
+2. Download and install these software tools:
   * Anaconda Navigator
   * Visual Studio Code
 2. Run these command in the Visual Studio Code terminal:
   * To create the conda virtual environment and install required Python packages:
 > conda create -n streamsage_env -c conda-forge streamlit beautifulsoup4 requests
+>  * beautifulsoup4==4.12.3
+  * Requests==2.31.0
+  * streamlit==1.33.0
+  * python==3.11
+> To run the project
   * To switch into the created environment where all the packages were installed
 > activate streamsage_env
-  * To run the project
-> streamlit run StreamSage_Rev4.py
->
+> Install the required packages and specific versions
+> streamlit run StreamSage.py
 
