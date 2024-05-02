@@ -191,7 +191,10 @@ The StreamSage application requires the following Python packages:
 - json
 - os
 - datetime
-
+  * beautifulsoup4==4.12.3
+  * Requests==2.31.0
+  * streamlit==1.33.0
+  * python==3.11
 Ensure you have the latest versions of these packages installed in your environment. You can check the versions of installed packages by running `pip list` in your terminal.
 
 ## Sample `api.py` for API Key Configuration
@@ -214,3 +217,8 @@ configure_api_keys('your_tmdb_api_key_here', 'your_tvdb_api_key_here')
 ```
 
 This script creates a `config.json` file with your API keys, which the StreamSage application uses to authenticate requests to the TVmaze and TMDb APIs.
+
+## Application Instructions
+- activate streamsage_env 
+- Install the required packages and specific versions
+- streamlit run StreamSage.py
