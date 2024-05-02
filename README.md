@@ -1,91 +1,216 @@
-# StreamSage: Your All-in-One TV Show Recommender
+Based on the provided `StreamSage.py` file and the existing `README.md`, I'll outline a detailed program/project overview, objective, architecture, functions, operations, features, and process for the StreamSage project. This will serve as a foundation for creating an updated README.md file for your GitHub repository.
 
-This project recommends TV shows based on user preferences.
+## Program/Project Overview
 
-> See this project in action on Streamlit! Click here: https://streamsage.streamlit.app/
+StreamSage is an interactive web application designed to recommend TV shows based on user preferences. It fetches real TV show data from the TVmaze and TMDb APIs, filters the shows based on the user's selected genre, language, duration, and rating, and displays the filtered results in an easy-to-navigate interface. The application aims to simplify the process of finding TV shows that match users' preferences, enhancing their viewing experience.
 
+## Objective
 
-## Project - Work Product Description:
+The primary objective of StreamSage is to provide a personalized and user-friendly platform for discovering TV shows. By leveraging data from the TVmaze and TMDb APIs, StreamSage allows users to filter TV shows based on various criteria, including genre, language, duration, and rating. The goal is to make TV show selection more accessible and tailored to individual user preferences.
 
-StreamSage is a TV show recommendation application. It fetches real TV show data from the TVmaze and TMDb APIs and filters the shows based on the user's selected genre, language, duration, and rating. The problem is that there are so many TV shows available on various streaming platforms, making it difficult for users to choose what to watch. Our goal is to make TV show selection easier and more personalized.
+## Architecture
 
-| The Project As-Is: | The Project To-Be: |
-| --------------- | --------------- |
-| --------------- | --------------- |
-| **File Format:** Input user preferences. Output a list of recommended TV shows. | **File Format:** Output a list of recommended TV shows and personalized viewing suggestions, personalized recommendations, viewing history. Webscrapping other Databases | 
-| **Python Packages:** Streamlit, Pandas, Requests, BeautifulSoup,  scikit-learn |
+StreamSage is built using Streamlit, a popular framework for creating web applications for machine learning and data science projects. The application's architecture is designed to be modular, with separate components for data fetching, filtering, and display.
 
-## Description of Solution: 
+I apologize for the oversight. Let's create a more detailed architecture diagram for the StreamSage project, incorporating the components and interactions described in the overview.
 
-We use Python and the Streamlit library to create an interactive web application that recommends TV shows. Our vision is that all users can easily find TV shows that match their preferences, saving them time and enhancing their viewing experience.
+## Architecture Diagram
 
-* Workflow Diagram
+```mermaid
+graph TD;
+    A[Start] --> B[User Interaction];
+    B --> C[Data Fetching];
+    C --> D[Data Filtering];
+    D --> E[Result Display];
+    E --> F[End];
 
-  * Workflow diagram of future ("TO-BE") state (improved processes from your solution).
+    B -->|User Input| G[Streamlit UI];
+    C -->|Fetch Data| H[TVmaze API];
+    C -->|Fetch Data| I[TMDb API];
+    D -->|Filter Data| J[Filtering Logic];
+    E -->|Display Results| K[Streamlit UI];
 
-* Minimum Viable Product (MVP) 1.0 delivered:
+    subgraph "Streamlit App"
+        G --> K
+    end
 
-  * The app filters the TV shows based on the user's selected genre, language, duration, and rating.
+    subgraph "Data Fetching"
+        H
+        I
+    end
 
-* Later MVP, i.e., v2, v3, vN+ functionality to be delivered
-For future enhancements, in the next versions of this project:
-  * Version x.0:
-    * Incorporate user viewing history to provide personalized recommendations
-    * Incorporate user viewing history to provide personalized recommendations.
-    * Add user reviews and ratings to the TV show data.
-    * Use machine learning algorithms to improve the recommendation system.
-    * User Authentication: Implement user authentication to allow users to create accounts and save their preferences.
-    * User Profile Creation: Allow users to create profiles where they can input information such as their favorite genres, preferred runtime, language, etc.
-    * Recommendation Engine: Develop a recommendation engine that suggests TV series based on user preferences. You can use collaborative filtering, content-based filtering, or a hybrid approach for this.
-    * Personalized Recommendations: Provide personalized recommendations based on the user's profile and viewing history.
-    * Search Functionality: Implement a search feature that allows users to search for TV series by title, genre, actors, directors, etc.
-    * Rating System: Allow users to rate TV series they've watched to improve future recommendations.
-    * Feedback Mechanism: Incorporate a feedback mechanism where users can provide feedback on the recommendations they receive to further refine the algorithm.
-    * Integration with Streaming Platforms: If possible, integrate with streaming platforms like Netflix, Hulu, etc., to provide direct links to recommended TV series.
-    * Trending and Popular Shows: Display trending and popular TV series to give users more options.
-    * Responsive UI: Design a user-friendly interface using Streamlit that is responsive and easy to navigate.
-    * Recommendation Details: Provide details for each recommended TV series, including synopsis, ratings, cast, trailers, and streaming platform availability.
-    * Save and Bookmark: Allow users to save and bookmark TV series they're interested in watching later.
-    * Notifications: Optionally, incorporate a notification system to alert users about new episodes of their favorite TV series or when new recommendations are available.
-    * Feedback and Support: Include a feedback form and support section where users can report issues or suggest improvements.
-    * Privacy and Data Security: Ensure user data privacy and security by implementing appropriate measures to protect user information.
+    subgraph "Data Filtering"
+        J
+    end
+```
 
+This diagram illustrates the flow of operations within the StreamSage application, starting from user interaction through data fetching, filtering, and finally displaying the results. It highlights the key components involved in each step and how they interact with each other.
 
-## Solution Design (high-level):
+### Explanation of Components:
 
-This project uses Streamlit, BeautifulSoup, and requests libraries to fetch, process, and display TV show data.
+- **User Interaction**: This is where the user interacts with the Streamlit UI, selecting their preferences for genre, language, duration, and rating.
+- **Data Fetching**: The application fetches TV show data from the TVmaze and TMDb APIs. This is represented by the `TVmaze API` and `TMDb API` nodes.
+- **Data Filtering**: The fetched data is processed and filtered based on the user's selected criteria. This is encapsulated by the `Filtering Logic` node.
+- **Result Display**: The filtered TV shows are displayed in the Streamlit UI, providing users with personalized recommendations.
 
-## Solution Code Description (low-level design): 
+This architecture diagram provides a visual representation of the StreamSage application's structure and the flow of data and operations within it.
 
-First, import the necessary Python libraries. Streamlit is used to create the web app, BeautifulSoup is used to parse HTML, and requests is used to send HTTP requests.
-Fetch TV show data: The app sends HTTP requests to the TVmaze and TMDb APIs to fetch TV show data.
-Filter TV shows: The app uses list comprehensions to filter the TV shows based on the user's selected genre, language, duration, and rating.
-Display TV show details: The app displays the details of each recommended TV show, including the title, genre, language, duration, platform, summary, and rating. The summary is parsed using BeautifulSoup to remove any HTML tags.
+### Components
 
-## Actual Working Product Code: 
+- **Data Fetching**: Fetches TV show data from the TVmaze and TMDb APIs.
+- **Data Filtering**: Filters the fetched data based on user-selected criteria.
+- **Data Display**: Displays the filtered TV shows in an interactive and user-friendly interface.
+- **User Interface**: Utilizes Streamlit's components to create an intuitive and responsive UI.
 
-* The code is available to the public here on this GitHub Repository. 
-* 
-> See this project in action on Streamlit! Click here: https://streamsage.streamlit.app/
+## Functions, Operations, and Features
 
-## Application Instructions:
+### Functions
 
-Here are the step-by-step instructions to install, set up, and use this project:
+- **Fetch TV Show Data**: Retrieves TV show data from the TVmaze and TMDb APIs.
+- **Filter TV Shows**: Filters the fetched data based on user-selected criteria such as genre, language, duration, and rating.
+- **Display TV Shows**: Displays the filtered TV shows in an interactive and user-friendly interface.
 
-1. Create a config.json and add the 2 api keys
-2. Download and install these software tools:
-  * Anaconda Navigator
-  * Visual Studio Code
-2. Run these command in the Visual Studio Code terminal:
-  * To create the conda virtual environment and install required Python packages:
-> conda create -n streamsage_env -c conda-forge streamlit beautifulsoup4 requests
->  * beautifulsoup4==4.12.3
-  * Requests==2.31.0
-  * streamlit==1.33.0
-  * python==3.11
-> To run the project
-  * To switch into the created environment where all the packages were installed
-> activate streamsage_env
-> Install the required packages and specific versions
-> streamlit run StreamSage.py
+### Operations
 
+- **User Interaction**: Users interact with the application through the Streamlit interface, selecting their preferences for genre, language, duration, and rating.
+- **Data Processing**: The application processes the user's selections and filters the TV show data accordingly.
+- **Result Display**: The filtered TV shows are displayed in the application, providing users with personalized recommendations.
+
+### Features
+
+- **Interactive Filtering**: Users can filter TV shows based on various criteria, including genre, language, duration, and rating.
+- **Personalized Recommendations**: Provides personalized TV show recommendations based on user preferences.
+- **Responsive UI**: The application features a responsive and user-friendly interface, designed for ease of use.
+
+## Process
+
+1. **User Interaction**: Users interact with the application through the Streamlit interface, selecting their preferences for genre, language, duration, and rating.
+2. **Data Fetching**: The application fetches TV show data from the TVmaze and TMDb APIs.
+3. **Data Filtering**: The fetched data is filtered based on the user's selected criteria.
+4. **Result Display**: The filtered TV shows are displayed in the application, providing users with personalized recommendations.
+
+## Future Features and Enhancements
+
+StreamSage aims to continuously improve and expand its functionality. Future enhancements include:
+
+- **Modularized the Program**: Refactor the codebase to make it more modular, improving maintainability and scalability.
+- **User Authentication**: Implement user authentication to allow users to create accounts and save their preferences.
+- **User Profile Creation**: Allow users to create profiles where they can input information such as their favorite genres, preferred runtime, language, etc.
+- **Recommendation Engine**: Develop a recommendation engine that suggests TV series based on user preferences. You can use collaborative filtering, content-based filtering, or a hybrid approach for this.
+- **Personalized Recommendations**: Provide personalized recommendations based on the user's profile and viewing history.
+- **Rating System**: Allow users to rate TV series they've watched to improve future recommendations.
+- **Feedback Mechanism**: Incorporate a feedback mechanism where users can provide feedback on the recommendations they receive to further refine the algorithm.
+- **Integration with Streaming Platforms**: If possible, integrate with streaming platforms like Netflix, Hulu, etc., to provide direct links to recommended TV series.
+- **Responsive UI**: Design a user-friendly interface using Streamlit that is responsive and easy to navigate.
+- **Recommendation Details**: Provide details for each recommended TV series, including synopsis, ratings, cast, trailers, and streaming platform availability.
+- **Save and Bookmark**: Allow users to save and bookmark TV series they're interested in watching later.
+- **Notifications**: Optionally, incorporate a notification system to alert users about new episodes of their favorite TV series or when new recommendations are available.
+- **Feedback and Support**: Include a feedback form and support section where users can report issues or suggest improvements.
+- **Privacy and Data Security**: Ensure user data privacy and security by implementing appropriate measures to protect user information.
+
+These enhancements aim to make StreamSage a more comprehensive and user-friendly platform for discovering and recommending TV shows based on individual preferences.
+
+## Flow Diagrams
+
+### Current Revision Flow
+
+```mermaid
+graph TD;
+    A[Start] --> B[User Interaction];
+    B --> C[Data Fetching];
+    C --> D[Data Filtering];
+    D --> E[Result Display];
+    E --> F[End];
+```
+
+### Future Updates and Enhancements Flow
+
+```mermaid
+graph TD;
+    A[Start] --> B[User Authentication];
+    B --> C[Personalized Recommendations];
+    C --> D[Integration with Streaming Platforms];
+    D --> E[Feedback Mechanism];
+    E --> F[Notifications];
+    F --> G[End];
+```
+
+This updated README.md file provides a comprehensive overview of the StreamSage project, its architecture, functionality, and future enhancements. It serves as a guide for users, contributors, and potential developers interested in expanding the project's capabilities.
+
+## Explanation of the Flow
+
+The StreamSage application follows a structured flow to provide personalized TV show recommendations to users. Here's a step-by-step explanation of the process:
+
+1. **User Interaction**: The user interacts with the Streamlit UI, selecting their preferences for genre, language, duration, and rating. This interaction triggers the data fetching process.
+
+2. **Data Fetching**: Based on the user's selections, the application fetches TV show data from the TVmaze and TMDb APIs. This step involves making HTTP requests to these APIs and parsing the JSON responses to extract relevant information.
+
+3. **Data Filtering**: The fetched data is then filtered based on the user's selected criteria. This includes filtering by genre, language, duration, and rating. The filtering logic ensures that only TV shows that match the user's preferences are considered for recommendations.
+
+4. **Result Display**: The filtered TV shows are displayed in the Streamlit UI, providing users with personalized recommendations. The UI is designed to be user-friendly, with clear headings and links to the TV shows' pages on the TVmaze and TMDb websites.
+
+5. **End**: The process concludes with the display of the filtered TV shows. Users can then explore the recommendations and select a TV show to learn more about it.
+
+## Visualizing the Diagram
+
+The architecture diagram provided earlier visually represents the flow of operations within the StreamSage application. It starts with user interaction, moves through data fetching and filtering, and ends with the display of results. This diagram helps in understanding the sequence of operations and the interaction between different components of the application.
+
+## Obtaining API Keys and Configuring the Project
+
+To run the StreamSage application, you need to obtain API keys from the TVmaze and TMDb APIs. Once you have these keys, you need to configure them in the project. This involves creating a `config.json` file in the project's root directory with the following structure:
+
+```json
+{
+ "tmdb_api_key": "your_tmdb_api_key_here",
+ "tvdb_api_key": "your_tvdb_api_key_here"
+}
+```
+
+Replace `"your_tmdb_api_key_here"` and `"your_tvdb_api_key_here"` with your actual API keys. This configuration file is used by the application to authenticate requests to the APIs.
+
+## Setting Up the Environment and Running the Project
+
+To set up the environment and run the StreamSage application, follow these steps:
+
+1. **Clone the Repository**: Clone the StreamSage repository from GitHub to your local machine.
+
+2. **Install Required Packages**: Install the required Python packages listed in the `requirements.txt` file. You can do this by running `pip install -r requirements.txt` in your terminal.
+
+3. **Configure API Keys**: Follow the instructions in the "Obtaining API Keys and Configuring the Project" section to configure your API keys.
+
+4. **Run the Application**: Navigate to the project's root directory in your terminal and run `streamlit run StreamSage.py`. This command starts the Streamlit server and opens the application in your default web browser.
+
+## Required Packages and Versions
+
+The StreamSage application requires the following Python packages:
+
+- Streamlit
+- Requests
+- PIL (Python Imaging Library)
+- BeautifulSoup
+- json
+- os
+- datetime
+
+Ensure you have the latest versions of these packages installed in your environment. You can check the versions of installed packages by running `pip list` in your terminal.
+
+## Sample `api.py` for API Key Configuration
+
+Here's a sample Python script for configuring API keys:
+
+```python
+import json
+
+def configure_api_keys(tmdb_api_key, tvdb_api_key):
+    config = {
+        "tmdb_api_key": tmdb_api_key,
+        "tvdb_api_key": tvdb_api_key
+    }
+    with open('config.json', 'w') as f:
+        json.dump(config, f)
+
+# Replace 'your_tmdb_api_key_here' and 'your_tvdb_api_key_here' with your actual API keys
+configure_api_keys('your_tmdb_api_key_here', 'your_tvdb_api_key_here')
+```
+
+This script creates a `config.json` file with your API keys, which the StreamSage application uses to authenticate requests to the TVmaze and TMDb APIs.
