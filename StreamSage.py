@@ -1,3 +1,32 @@
+"""
+StreamSage: Your All-in-One Streaming Companion
+
+This Python script is designed to serve as an interactive web application for discovering and recommending TV shows based on user preferences. It leverages data from the TVmaze and TMDb APIs to fetch real-time TV show information, which is then filtered and displayed according to the user's selected criteria.
+
+Features include:
+- Fetching TV show data from TVmaze and TMDb APIs.
+- Filtering TV shows based on genre, language, duration, and rating.
+- Displaying filtered TV shows in an easy-to-navigate interface.
+- Pagination for browsing through large datasets.
+- Customizable filters for a personalized TV show discovery experience.
+
+Usage:
+1. Ensure you have the necessary API keys for TVmaze and TMDb.
+2. Configure the API keys in a `config.json` file.
+3. Run the application using Streamlit.
+
+Dependencies:
+- Streamlit
+- Requests
+- BeautifulSoup
+- json
+- os
+- datetime
+
+Author: [Your Name]
+Date: [Current Date]
+"""
+
 import requests
 import os
 import json
@@ -30,6 +59,7 @@ def load_config(config_file):
         config = json.load(f)
     return config
 
+
 def check_and_update_usage(api_key):
     usage_file = 'usage.json'
     if os.path.exists(usage_file):
@@ -60,6 +90,17 @@ config = load_config('config.json')
 check_and_update_usage(config['tmdb_api_key'])
 check_and_update_usage(config['tvdb_api_key'])
 
+
+"""
+Section: Data Fetching and Filtering
+
+This section of the code is responsible for fetching TV show data from external APIs (TVmaze and TMDb) and filtering the data based on user-selected criteria.
+
+Functions and operations include:
+- Fetching series data from TVmaze and TMDb.
+- Filtering series data based on genre, language, duration, and rating.
+- Displaying filtered series data in the Streamlit UI.
+"""
 # Fetch series data from TVMaze
 url_tvmaze = "http://api.tvmaze.com/shows"
 response_tvmaze = requests.get(url_tvmaze)
@@ -102,13 +143,13 @@ class _SessionState:
     def __setitem__(self, key, val):
         self._state[key] = val
 
+
 def get_session_state():
     if not hasattr(st, '_session_state'):
         st._session_state = _SessionState()
     return st._session_state
 
 # Fetch series data from TVMaze
-# ... (previous code) ...
 
 # Get the session state
 state = get_session_state()
