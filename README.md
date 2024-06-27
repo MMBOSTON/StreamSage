@@ -1,5 +1,3 @@
-Based on the provided `StreamSage.py` file and the existing `README.md`, I'll outline a detailed program/project overview, objective, architecture, functions, operations, features, and process for the StreamSage project. This will serve as a foundation for creating an updated README.md file for your GitHub repository.
-
 ## Program/Project Overview
 
 StreamSage is an interactive web application designed to recommend TV shows based on user preferences. It fetches real TV show data from the TVmaze and TMDb APIs, filters the shows based on the user's selected genre, language, duration, and rating, and displays the filtered results in an easy-to-navigate interface. The application aims to simplify the process of finding TV shows that match users' preferences, enhancing their viewing experience.
